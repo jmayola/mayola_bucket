@@ -25,6 +25,10 @@ func UploadFiles(c *fiber.Ctx) error {
 	// get all files from "documents" key:
 	files := form.File["file"]
 
+	if len(files) == 0 {
+		c.SendString("Incorrect format!!!.")
+		return c.SendStatus(403)
+	}
 	// making sure not someone that i dont one uses the bucket
 	if token := form.Value["token"]; token[0] != os.Getenv("TOKEN") {
 		fmt.Printf("token used was %s", token[0])
@@ -58,7 +62,7 @@ func UploadFiles(c *fiber.Ctx) error {
 
 		// creating response object
 		response := FileResponse{File: filename}
-		response.Url = fmt.Sprintf("%s/%s", os.Getenv("APP_URL"), filename)
+		response.Url = fmt.Sprintf("%s/uploads/%s", os.Getenv("APP_URL"), filename)
 
 		// save the files to disk
 		if err := c.SaveFile(file, fmt.Sprintf("./files/%s", filename)); err != nil {

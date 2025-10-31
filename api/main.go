@@ -25,8 +25,8 @@ func StartApi() {
 		name = "bucket"
 	}
 	//tls
-	pem := os.Getenv("PEM_FILE")
-	cert := os.Getenv("CERT_FILE")
+	// pem := os.Getenv("PEM_FILE")
+	// cert := os.Getenv("CERT_FILE")
 
 	// app configuration
 	app := fiber.New(fiber.Config{
@@ -55,11 +55,7 @@ func StartApi() {
 		MaxAge:        3600,
 	})
 
-	app.Server().MaxConnsPerIP = 1
+	// app.Server().MaxConnsPerIP = 1
 
-	if pem != "" {
-		log.Fatal(app.ListenTLS(url, pem, cert))
-	} else {
-		log.Fatal(app.Listen(url))
-	}
+	log.Fatal(app.Listen(url))
 }
