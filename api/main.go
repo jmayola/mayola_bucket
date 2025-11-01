@@ -47,7 +47,7 @@ func StartApi() {
 	app.Post("/upload", handlers.UploadFiles)
 
 	// upload files to be accessed
-	app.Static("/uploads", "/files", fiber.Static{
+	app.Static("/uploads", "./files", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
